@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.example.kotlinfirebasemessenger.LoginActivity.LoginActivity.TAG
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,7 +37,9 @@ class LoginActivity : AppCompatActivity() {
 
 
         btnLogin.setOnClickListener {
-
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+               // .addOnCompleteListener {  }
+               // .addOnFailureListener {  }
         }
 
         tvBacktoregister.setOnClickListener {
