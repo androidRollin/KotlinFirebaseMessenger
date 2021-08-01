@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clRegister"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/teal_200"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/etUsernameRegister"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        android:paddingStart="20dp"
+        android:text="user01"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etEmailRegister"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="20dp"
+        android:text="user01@gmail.com"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
+        app:layout_constraintEnd_toEndOf="@+id/etUsernameRegister"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etUsernameRegister"
+        app:layout_constraintTop_toBottomOf="@+id/etUsernameRegister" />
+
+    <EditText
+        android:id="@+id/etPasswordRegister"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:paddingStart="20dp"
+        android:text="userpass123"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray"
+        app:layout_constraintEnd_toEndOf="@+id/etEmailRegister"
+        app:layout_constraintStart_toStartOf="@+id/etEmailRegister"
+        app:layout_constraintTop_toBottomOf="@+id/etEmailRegister" />
+
+    <Button
+        android:id="@+id/btnRegisterRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Register"
+        app:layout_constraintEnd_toEndOf="@+id/etPasswordRegister"
+        app:layout_constraintStart_toStartOf="@+id/etPasswordRegister"
+        app:layout_constraintTop_toBottomOf="@+id/etPasswordRegister" />
+
+    <TextView
+        android:id="@+id/tvAlreadyhaveaccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Already have an account"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/btnRegisterRegister"
+        app:layout_constraintStart_toStartOf="@+id/btnRegisterRegister"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegisterRegister" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
