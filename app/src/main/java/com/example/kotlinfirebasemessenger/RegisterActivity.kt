@@ -16,6 +16,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import com.example.kotlinfirebasemessenger.RegisterActivity.MainActivity.TAG
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import de.hdodenhof.circleimageview.CircleImageView
+import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -25,6 +29,9 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var btnRegisterRegister: Button
     lateinit var tvAlreadyhaveanaccount: TextView
     lateinit var ibSelectPhotoRegister: ImageButton
+    lateinit var civSelectedPhoto: CircleImageView
+
+    var selectedPhotoUri: Uri? = null
 
     private lateinit var auth: FirebaseAuth
 
@@ -36,7 +43,7 @@ class RegisterActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_register)
 
         etUsernameRegister = findViewById(R.id.etUsernameRegister)
         etEmailRegister = findViewById(R.id.etEmailRegister)
@@ -44,28 +51,36 @@ class RegisterActivity : AppCompatActivity() {
         btnRegisterRegister = findViewById(R.id.btnRegisterRegister)
         tvAlreadyhaveanaccount = findViewById(R.id.tvAlreadyhaveaccount)
         ibSelectPhotoRegister = findViewById(R.id.ibSelectphotoRegister)
+        civSelectedPhoto = findViewById(R.id.civSelectPhoto)
 
 
-        ibSelectPhotoRegister.setBackgroundResource(R.drawable.indiana)
+//        ibSelectPhotoRegister.setBackgroundResource(R.drawable.indiana)
         var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
 
                 val data: Intent? = result.data
                 if (data != null){
                     Log.d(TAG, "Photo was selected")
-                    val uri = data.data
-                    Log.d(TAG, uri.toString())
-                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-                    val bitmapDrawable = BitmapDrawable(bitmap)
 
-                    if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN){
-                        ibSelectPhotoRegister.setBackgroundDrawable(bitmapDrawable)
-                    }
-                    else
-                    {
-                        ibSelectPhotoRegister.background = bitmapDrawable
-                    }
-                    
+                    selectedPhotoUri = data.data
+
+                    Log.d(TAG, selectedPhotoUri.toString())
+                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
+//                    val bitmapDrawable = BitmapDrawable(bitmap)
+//
+//                    if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN){
+//
+//                        civSelectedPhoto.setImageBitmap(bitmap)
+//                        ibSelectPhotoRegister.setBackgroundDrawable(bitmapDrawable)
+//                    }
+//                    else
+//                    {
+//                        civSelectedPhoto.setImageBitmap(bitmap)
+//                        ibSelectPhotoRegister.background = bitmapDrawable
+//                    }
+
+                    ibSelectPhotoRegister.alpha = 0f
+                    civSelectedPhoto.setImageBitmap(bitmap)
 //                    Log.d(TAG, uri.toString())
 //                    val bitmap = getCapturedImage(uri!!)
 //                    val bitmapDrawable = BitmapDrawable(this.resources, bitmap)
@@ -138,6 +153,8 @@ class RegisterActivity : AppCompatActivity() {
                 if (!it.isSuccessful) return@addOnCompleteListener
                 // else if successful
                 Log.d(TAG, "Successfully created user with uid: ${it.result?.user?.uid}")
+
+                uploadImageToFirebaseStorage()
             }
             .addOnFailureListener {
                 Log.d(TAG, "Failed to create user: ${it.message}")
@@ -145,5 +162,45 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
+    private fun uploadImageToFirebaseStorage() {
+
+        if(selectedPhotoUri ==  null) return
+
+        val filename = UUID.randomUUID().toString()
+        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+
+        ref.putFile(selectedPhotoUri!!)
+            .addOnSuccessListener {
+                Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path} ")
+
+                ref.downloadUrl.addOnSuccessListener {
+                    it.toString()
+                    Log.d(TAG, "File Location: $it")
+
+                    saveUserToFirebaseDatabase(it.toString())
+                }
+
+            }
+            .addOnFailureListener {
+                //do some logging here
+            }
+
+    }
+
+    private fun saveUserToFirebaseDatabase(profileImageUrl: String) {
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+
+        val user = User(uid, username = etUsernameRegister.text.toString(), profileImageUrl)
+
+        ref.setValue(user)
+            .addOnSuccessListener {
+                Log.d(TAG, "Finally we saved the user to Firebase Database")
+            }
+        //String, a number, an array
+    }
+
+    class User (val uid: String,  val username: String, val profileImageUrl: String)
 
 }
+
