@@ -65,6 +65,7 @@ class RegisterActivity : AppCompatActivity() {
                     {
                         ibSelectPhotoRegister.background = bitmapDrawable
                     }
+                    
 //                    Log.d(TAG, uri.toString())
 //                    val bitmap = getCapturedImage(uri!!)
 //                    val bitmapDrawable = BitmapDrawable(this.resources, bitmap)
