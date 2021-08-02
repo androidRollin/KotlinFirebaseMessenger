@@ -6,16 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/teal_200"
-    tools:context=".MainActivity">
+    tools:context=".RegisterActivity">
 
     <EditText
         android:id="@+id/etUsernameRegister"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
+
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-
         android:background="@drawable/rounded_edittext_register_login"
         android:ems="10"
         android:hint="Username"
@@ -24,14 +24,15 @@
         android:textColor="@color/black"
         android:textColorHint="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/ibSelectphotoRegister" />
 
     <EditText
         android:id="@+id/etEmailRegister"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/rounded_edittext_register_login"
         android:ems="10"
         android:hint="Email"
@@ -40,15 +41,27 @@
         android:textColor="@color/black"
         android:textColorHint="@color/gray"
         app:layout_constraintEnd_toEndOf="@+id/etUsernameRegister"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/etUsernameRegister"
         app:layout_constraintTop_toBottomOf="@+id/etUsernameRegister" />
+
+    <Button
+        android:id="@+id/btnRegisterRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_button"
+        android:text="Register"
+        app:layout_constraintEnd_toEndOf="@+id/etPasswordRegister"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/etPasswordRegister"
+        app:layout_constraintTop_toBottomOf="@+id/etPasswordRegister" />
 
     <EditText
         android:id="@+id/etPasswordRegister"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/rounded_edittext_register_login"
         android:ems="10"
         android:hint="Password"
@@ -57,31 +70,35 @@
         android:textColor="@color/black"
         android:textColorHint="@color/gray"
         app:layout_constraintEnd_toEndOf="@+id/etEmailRegister"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/etEmailRegister"
         app:layout_constraintTop_toBottomOf="@+id/etEmailRegister" />
-
-    <Button
-        android:id="@+id/btnRegisterRegister"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/rounded_button"
-        android:text="Register"
-        app:layout_constraintEnd_toEndOf="@+id/etPasswordRegister"
-        app:layout_constraintStart_toStartOf="@+id/etPasswordRegister"
-        app:layout_constraintTop_toBottomOf="@+id/etPasswordRegister" />
 
     <TextView
         android:id="@+id/tvAlreadyhaveaccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="16dp"
         android:text="Already have an account"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/btnRegisterRegister"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/btnRegisterRegister"
         app:layout_constraintTop_toBottomOf="@+id/btnRegisterRegister" />
+
+    <ImageButton
+        android:id="@+id/ibSelectphotoRegister"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="70dp"
+        android:contentDescription="Select Photo"
+        android:background="@drawable/rounded_select_photo_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
